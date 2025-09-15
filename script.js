@@ -312,7 +312,7 @@ class SortingSimulator {
             while (j >= 0 && this.array[j] > key) {
                 yield {
                     highlights: { comparing: [j, j + 1] },
-                    message: `Element at position ${j} > ${key}, shifting right`
+                    message: `Element ${this.array[j]} (at position ${j}) > ${key}, shifting right`
                 };
 
                 // Shift element to the right (not swap!)
