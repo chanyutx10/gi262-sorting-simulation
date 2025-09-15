@@ -6,14 +6,17 @@ class SortingSimulator {
         this.isSorting = false;
         this.algorithm = 'bubble';
         this.animationSpeed = 800; // milliseconds
-        this.stepGenerators = {
+
+        this.initializeEventListeners();
+        this.generateRandomArray();
+    }
+
+    get stepGenerators() {
+        return {
             bubble: this.bubbleSortSteps.bind(this),
             insertion: this.insertionSortSteps.bind(this),
             selection: this.selectionSortSteps.bind(this)
         };
-
-        this.initializeEventListeners();
-        this.generateRandomArray();
     }
 
     initializeEventListeners() {
@@ -33,6 +36,9 @@ class SortingSimulator {
 
         // Test animation button
         // document.getElementById('test-animation-btn').addEventListener('click', () => this.testAnimation());
+
+        // Help modal functionality
+        this.setupModal();
 
         // Speed control
         const speedSlider = document.getElementById('speed-slider');
@@ -333,6 +339,66 @@ class SortingSimulator {
         }
     }
 
+    *bubbleSortSteps() {
+        const n = this.array.length;
+        for (let i = 0; i < n - 1; i++) {
+            for (let j = 0; j < n - i - 1; j++) {
+                yield {
+                    highlights: { comparing: [j, j + 1] },
+                    message: `Comparing elements at positions ${j} and ${j + 1}`
+                };
+
+                if (this.array[j] > this.array[j + 1]) {
+                    [this.array[j], this.array[j + 1]] = [this.array[j + 1], this.array[j]];
+                    yield {
+                        highlights: { comparing: [j, j + 1] },
+                        swap: { from: j, to: j + 1 },
+                        message: `Swapped elements at positions ${j} and ${j + 1}`
+                    };
+                }
+            }
+            yield {
+                highlights: {},
+                message: `Pass ${i + 1} complete. Element at position ${n - i - 1} is now in its final position.`
+            };
+        }
+    }
+
+    *insertionSortSteps() {
+        const n = this.array.length;
+        for (let i = 1; i < n; i++) {
+            const key = this.array[i];
+            let j = i - 1;
+
+            yield {
+                highlights: { comparing: [i] },
+                message: `Considering element at position ${i} (value: ${key})`
+            };
+
+            while (j >= 0 && this.array[j] > key) {
+                yield {
+                    highlights: { comparing: [j, j + 1] },
+                    message: `Element ${this.array[j]} at position ${j} > ${key}, shifting right`
+                };
+
+                // Shift element to the right (not swap!)
+                this.array[j + 1] = this.array[j];
+                j--;
+
+                yield {
+                    highlights: { comparing: [j + 1] },
+                    message: `Shifted element to position ${j + 1}`
+                };
+            }
+
+            this.array[j + 1] = key;
+            yield {
+                highlights: { comparing: [j + 1] },
+                message: `Inserted element ${key} at position ${j + 1}`
+            };
+        }
+    }
+
     *selectionSortSteps() {
         const n = this.array.length;
         for (let i = 0; i < n - 1; i++) {
@@ -367,6 +433,36 @@ class SortingSimulator {
                 message: `Element at position ${i} is now in its final position`
             };
         }
+    }
+
+    setupModal() {
+        const modal = document.getElementById('instructions-modal');
+        const helpBtn = document.getElementById('help-btn');
+        const closeBtn = document.querySelector('.close-btn');
+
+        // Open modal when help button is clicked
+        helpBtn.addEventListener('click', () => {
+            modal.style.display = 'block';
+        });
+
+        // Close modal when close button is clicked
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Close modal when Escape key is pressed
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
     }
 }
 

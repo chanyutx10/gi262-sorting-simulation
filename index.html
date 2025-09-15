@@ -30,20 +30,40 @@
             <button id="start-btn">Start Sort</button>
             <button id="step-btn" disabled>Step</button>
             <button id="reset-btn">Reset</button>
-            <button id="test-animation-btn">Test Animations</button>
+            <button id="test-animation-btn" hidden>Test Animations</button>
         </div>
 
-        <div class="instructions">
-            <h3>How to Use:</h3>
-            <ol>
-                <li><strong>Select Algorithm:</strong> Choose Bubble Sort, Insertion Sort, or Selection Sort from the dropdown</li>
-                <li><strong>Prepare Data:</strong> Click "Generate Random Array" for random numbers or "Load Sample Data" for algorithm-specific examples</li>
-                <li><strong>Start Sorting:</strong> Click "Start Sort" to begin the visualization</li>
-                <li><strong>Step Through:</strong> Use the "Step" button to advance one step at a time and see detailed explanations</li>
-                <li><strong>Control Speed:</strong> Adjust the speed slider to make animations faster or slower</li>
-                <li><strong>Reset:</strong> Click "Reset" to start over with the same data or select a different algorithm</li>
-            </ol>
-            <p><em>Watch the circles change color and move to understand how each algorithm works!</em></p>
+        <div class="help-section">
+            <button id="help-btn" class="help-button" title="How to use this simulation">
+                <span class="help-icon">?</span>
+                Help
+            </button>
+        </div>
+
+        <!-- Instructions Modal -->
+        <div id="instructions-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>How to Use the Sorting Simulator</h3>
+                    <span class="close-btn">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <ol>
+                        <li><strong>Select Algorithm:</strong> Choose Bubble Sort, Insertion Sort, or Selection Sort
+                            from the dropdown</li>
+                        <li><strong>Prepare Data:</strong> Click "Generate Random Array" for random numbers or "Load
+                            Sample Data" for algorithm-specific examples</li>
+                        <li><strong>Start Sorting:</strong> Click "Start Sort" to begin the visualization</li>
+                        <li><strong>Step Through:</strong> Use the "Step" button to advance one step at a time and see
+                            detailed explanations</li>
+                        <li><strong>Control Speed:</strong> Adjust the speed slider to make animations faster or slower
+                        </li>
+                        <li><strong>Reset:</strong> Click "Reset" to start over with the same data or select a different
+                            algorithm</li>
+                    </ol>
+                    <p><em>💡 Watch the circles change color and move to understand how each algorithm works!</em></p>
+                </div>
+            </div>
         </div>
 
         <div class="visualization">
