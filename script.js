@@ -18,6 +18,7 @@ class SortingSimulator {
 
     initializeEventListeners() {
         document.getElementById('generate-btn').addEventListener('click', () => this.generateRandomArray());
+        document.getElementById('sample-btn').addEventListener('click', () => this.loadSampleData());
         document.getElementById('start-btn').addEventListener('click', () => this.startSort());
         document.getElementById('step-btn').addEventListener('click', async () => {
             document.getElementById('step-btn').disabled = true;
@@ -31,7 +32,7 @@ class SortingSimulator {
         });
 
         // Test animation button
-        document.getElementById('test-animation-btn').addEventListener('click', () => this.testAnimation());
+        // document.getElementById('test-animation-btn').addEventListener('click', () => this.testAnimation());
 
         // Speed control
         const speedSlider = document.getElementById('speed-slider');
@@ -51,6 +52,22 @@ class SortingSimulator {
         this.originalArray = [...this.array];
         this.renderArray();
         this.updateStatus('Array generated. Click "Start Sort" to begin.');
+        document.getElementById('start-btn').disabled = false;
+        document.getElementById('step-btn').disabled = true;
+    }
+
+    loadSampleData() {
+        // Sample data designed to demonstrate each algorithm's characteristics
+        const sampleData = {
+            bubble: [5, 1, 4, 2, 8, 3, 7, 6], // Shows multiple swaps and bubbling behavior
+            insertion: [9, 5, 1, 4, 3, 8, 2, 7], // Shows shifting and insertion behavior
+            selection: [64, 25, 12, 22, 11, 45, 33, 18] // Shows selection of minimum values
+        };
+
+        this.array = [...sampleData[this.algorithm]];
+        this.originalArray = [...this.array];
+        this.renderArray();
+        this.updateStatus(`Sample data loaded for ${this.algorithm} sort. Click "Start Sort" to begin.`);
         document.getElementById('start-btn').disabled = false;
         document.getElementById('step-btn').disabled = true;
     }
